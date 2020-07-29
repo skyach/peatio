@@ -1,11 +1,11 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
-describe Abilities do
+describe Ability do
 
   context 'abilities for superadmin' do
     let(:member) { create(:member, role: 'superadmin') }
-    subject(:ability) { Abilities.new(member) }
+    subject(:ability) { Ability.new(member) }
 
     it { is_expected.to be_able_to(:manage, Account.new) }
     it { is_expected.to be_able_to(:manage, Currency.new) }
@@ -30,7 +30,7 @@ describe Abilities do
 
   context 'abilities for admin' do
     let(:member) { create(:member, role: 'admin') }
-    subject(:ability) { Abilities.new(member) }
+    subject(:ability) { Ability.new(member) }
 
     it { is_expected.to be_able_to(:manage, Currency.new) }
     it { is_expected.to be_able_to(:manage, Deposit.new) }
@@ -59,7 +59,7 @@ describe Abilities do
 
   context 'abilities for manager' do
     let(:member) { create(:member, role: 'manager') }
-    subject(:ability) { Abilities.new(member) }
+    subject(:ability) { Ability.new(member) }
 
 
     it { is_expected.to be_able_to(:read, Operations::Account.new) }
@@ -88,7 +88,7 @@ describe Abilities do
 
   context 'abilities for compliance' do
     let(:member) { create(:member, role: 'compliance') }
-    subject(:ability) { Abilities.new(member) }
+    subject(:ability) { Ability.new(member) }
 
     it { is_expected.to be_able_to(:read, Account.new) }
     it { is_expected.to be_able_to(:read, Deposit.new) }
@@ -115,7 +115,7 @@ describe Abilities do
 
   context 'abilities for support' do
     let(:member) { create(:member, role: 'support') }
-    subject(:ability) { Abilities.new(member) }
+    subject(:ability) { Ability.new(member) }
 
     it { is_expected.to be_able_to(:read, Account.new) }
     it { is_expected.to be_able_to(:read, Deposit.new) }
@@ -130,7 +130,7 @@ describe Abilities do
 
   context 'abilities for technical' do
     let(:member) { create(:member, role: 'technical') }
-    subject(:ability) { Abilities.new(member) }
+    subject(:ability) { Ability.new(member) }
 
     it { is_expected.to be_able_to(:manage, Market.new) }
     it { is_expected.to be_able_to(:manage, Currency.new) }
@@ -150,7 +150,7 @@ describe Abilities do
 
   context 'abilities for accountant' do
     let(:member) { create(:member, role: 'accountant') }
-    subject(:ability) { Abilities.new(member) }
+    subject(:ability) { Ability.new(member) }
 
     it { is_expected.to be_able_to(:read, Deposit.new) }
     it { is_expected.to be_able_to(:read, Withdraw.new) }

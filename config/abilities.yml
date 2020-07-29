@@ -1,0 +1,136 @@
+roles:
+  - admin
+  - manager
+  - accountant
+  - superadmin
+  - technical
+  - compliance
+  - support
+
+permissions:
+  admin:
+    read:
+      - Order
+      - Trade
+      - Member
+      - Account
+      - PaymentAddress
+    update:
+      - Order
+      - Member
+    manage:
+      - Operations::Account
+      - Operations::Asset
+      - Operations::Expense
+      - Operations::Liability
+      - Operations::Revenue
+      - Engine
+      - Market
+      - Currency
+      - Blockchain
+      - Wallet
+      - TradingFee
+      - Adjustment
+      - Deposit
+      - Withdraw
+  accountant:
+    read:
+      - Operations::Account
+      - Operations::Asset
+      - Operations::Expense
+      - Operations::Liability
+      - Operations::Revenue
+      - Member
+      - Deposit
+      - Withdraw
+      - Account
+      - PaymentAddress
+    write:
+      - Deposit
+      - Withdraw
+    create:
+      - Deposits::Fiat
+      - Adjustment
+  compliance:
+    read:
+      - Operations::Account
+      - Operations::Asset
+      - Operations::Expense
+      - Operations::Liability
+      - Operations::Revenue
+      - Member
+      - Deposit
+      - Withdraw
+      - Account
+      - PaymentAddress
+    write:
+      - Deposit
+      - Withdraw
+  manager:
+    read:
+      - Operations::Account
+      - Operations::Asset
+      - Operations::Expense
+      - Operations::Liability
+      - Operations::Revenue
+      - Deposit
+      - Withdraw
+      - Account
+      - PaymentAddress
+      - Member
+      - Trade
+      - Order
+    update:
+      - Order
+    manage:
+      - Currency
+      - Blockchain
+  superadmin:
+    manage:
+      - Operations::Account
+      - Operations::Asset
+      - Operations::Expense
+      - Operations::Liability
+      - Operations::Revenue
+      - Deposit
+      - Withdraw
+      - Account
+      - PaymentAddress
+      - Member
+      - Engine
+      - Market
+      - Currency
+      - Blockchain
+      - TradingFee
+      - Wallet
+      - Adjustment
+    read:
+      - Trade
+      - Order
+    update:
+      - Order
+  support:
+    read:
+      - Deposit
+      - Withdraw
+      - Account
+      - Member
+  technical:
+    read:
+      - Operations::Account
+      - Operations::Asset
+      - Operations::Expense
+      - Operations::Liability
+      - Operations::Revenue
+      - Deposit
+      - Withdraw
+      - Account
+      - PaymentAddress
+      - Member
+    manage:
+      - Engine
+      - Market
+      - Currency
+      - Blockchain
+      - TradingFee
+      - Wallet

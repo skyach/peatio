@@ -6,7 +6,7 @@ module API
       extend Memoist
 
       def authorize!(*args)
-        Abilities.new(current_user).authorize!(*args)
+        Ability.new(current_user).authorize!(*args)
       rescue StandardError
         error!({ errors: ['admin.ability.not_permitted'] }, 403)
       end
