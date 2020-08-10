@@ -60,11 +60,12 @@ module API
 
           ransack_params = Helpers::RansackBuilder.new(params)
                              .eq(:blockchain_key)
-                             .translate(currency: :currency_id)
+                             .translate(currency: :currency_ids)
                              .merge(kind_eq: params[:kind].present? ? Wallet.kinds[params[:kind].to_sym] : nil)
                              .build
 
-          search = ::Wallet.ransack(ransack_params)
+          binding.pry
+          search = ::Wallet.joins(:currencies).ransack(ransack_params)
           search.sorts = "#{params[:order_by]} #{params[:ordering]}"
           present paginate(search.result), with: API::V2::Admin::Entities::Wallet
         end

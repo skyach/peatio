@@ -31,7 +31,7 @@ module API
           )
 
           expose(
-            :currency_id,
+            :currency_ids,
             as: :currency,
             documentation: {
                 type: String,

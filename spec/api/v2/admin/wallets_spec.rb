@@ -16,7 +16,7 @@ describe API::V2::Admin::Wallets, type: :request do
 
       result = JSON.parse(response.body)
       expect(result.fetch('id')).to eq wallet.id
-      expect(result.fetch('currency')).to eq wallet.currency_id
+      expect(result.fetch('currency')).to eq wallet.currency_ids
       expect(result.fetch('address')).to eq wallet.address
     end
 
@@ -49,11 +49,11 @@ describe API::V2::Admin::Wallets, type: :request do
     end
 
     it 'returns wallet balance if node accessible' do
-      wallet.update(balance: {wallet.currency_id => '1'})
+      wallet.update(balance: { 'eth' => '1'})
 
       api_get "/api/v2/admin/wallets/#{wallet.id}", token: token
       expect(response).to be_successful
-      expect(response_body['balance']).to eq({ wallet.currency_id =>'1' })
+      expect(response_body['balance']).to eq({ 'eth' => '1' })
     end
   end
 
@@ -67,11 +67,11 @@ describe API::V2::Admin::Wallets, type: :request do
     end
 
     it 'returns wallets by ascending order' do
-      api_get '/api/v2/admin/wallets', params: { ordering: 'asc', order_by: 'currency_id'}, token: token
+      api_get '/api/v2/admin/wallets', params: { ordering: 'asc', order_by: 'currency_ids'}, token: token
       result = JSON.parse(response.body)
 
       expect(response).to be_successful
-      expect(result.first['currency']).to eq 'btc'
+      expect(result.first['currency']).to eq ['eth']
     end
 
     it 'returns paginated wallets' do
@@ -125,7 +125,7 @@ describe API::V2::Admin::Wallets, type: :request do
         result = JSON.parse(response.body)
 
         expect(result.length).not_to eq 0
-        expect(result.map { |r| r["currency"]}).to all eq "eth"
+        expect(result.map { |r| r["currency"]}).to all eq ["eth"]
       end
     end
   end
