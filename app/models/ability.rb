@@ -12,10 +12,14 @@ class Ability
       return nil if Ability.permissions[member.role].nil?
 
       # Iterate through member permissions
-      Ability.permissions[member.role].each do |action, models|
+      Ability.permissions[member.role].each do |action, objects|
         # Iterate through a list of member model access
-        models.each do |model|
-          can action.to_sym, model == 'all' ? model.to_sym : model.constantize
+
+        objects.each do |object|
+          # check if model has some attributes for which she can access
+          model = object.is_a?(Hash) ? object.keys[0] : object
+          # example, can :read, Currency, :attributes => [:visible, :name] (model attributes)
+          can action.to_sym, model == 'all' ? model.to_sym : model.constantize, :attributes => object.is_a?(Hash) ? object[model].map(&:to_sym) : :all
         end
       end
     end
