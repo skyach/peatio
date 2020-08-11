@@ -19,6 +19,7 @@ permissions:
       - Order
       - Member
     manage:
+      - Beneficiary
       - Operations::Account
       - Operations::Asset
       - Operations::Expense
@@ -45,6 +46,7 @@ permissions:
       - Withdraw
       - Account
       - PaymentAddress
+      - Beneficiary
     write:
       - Deposit
       - Withdraw
@@ -63,6 +65,7 @@ permissions:
       - Withdraw
       - Account
       - PaymentAddress
+      - Beneficiary
     write:
       - Deposit
       - Withdraw
@@ -77,6 +80,7 @@ permissions:
       - Withdraw
       - Account
       - PaymentAddress
+      - Beneficiary
       - Member
       - Trade
       - Order
@@ -104,6 +108,7 @@ permissions:
       - TradingFee
       - Wallet
       - Adjustment
+      - Beneficiary
     read:
       - Trade
       - Order
@@ -126,6 +131,7 @@ permissions:
       - Withdraw
       - Account
       - PaymentAddress
+      - Beneficiary
       - Member
     manage:
       - Engine
