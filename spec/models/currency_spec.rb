@@ -115,7 +115,7 @@ describe Currency do
     it 'should raise validation error for max currency' do
       record = build(:currency, :fake, id: 'fake2', type: 'fiat', base_factor: 100)
       record.save
-      expect(record.errors.full_messages).to include(/Max Currency limit has reached/i)
+      expect(record.errors.full_messages).to include(/Max Currency limit has been reached/i)
     end
   end
 end

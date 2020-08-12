@@ -178,7 +178,7 @@ describe Market do
     it 'should raise validation error for max market' do
       record = build(:market, :btctrst)
       record.save
-      expect(record.errors.full_messages).to include(/Max Market limit has reached/i)
+      expect(record.errors.full_messages).to include(/Max Market limit has been reached/i)
     end
   end
 end
