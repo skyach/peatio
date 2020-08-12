@@ -170,4 +170,15 @@ describe Market do
       expect { subject.destroy! }.to change(TradingFee, :count).by(-1)
     end
   end
+
+  context 'validate max market' do
+    before { ENV['MAX_MARKETS'] = '2' }
+    after  { ENV['MAX_MARKETS'] = '20' }
+
+    it 'should raise validation error for max market' do
+      record = build(:market, :btctrst)
+      record.save
+      expect(record.errors.full_messages).to include(/Max Market limit has reached/i)
+    end
+  end
 end

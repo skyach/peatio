@@ -33,6 +33,11 @@ class Currency < ApplicationRecord
 
   # == Validations ==========================================================
 
+  validate on: :create do
+    errors.add(:max, 'Currency limit has reached')\
+      if Currency.count >= ENV['MAX_CURRENCIES'].to_i
+  end
+
   validates :code, presence: true, uniqueness: { case_sensitive: false }
 
   validates :blockchain_key,
