@@ -95,6 +95,7 @@ describe API::V2::Management::Deposits, type: :request do
       expect(record.amount).to eq 750.77
       expect(record.aasm_state).to eq 'submitted'
       expect(record.account).to eq member.get_account(currency)
+      expect(record.z_type).to eq 'wire'
     end
 
     it 'can create fiat deposit and immediately accept it' do
@@ -168,6 +169,20 @@ describe API::V2::Management::Deposits, type: :request do
         request
         expect(response).to have_http_status(422)
         expect(response).to include_api_error('management.currency.deposit_disabled')
+      end
+    end
+
+    context 'deposit with z_type' do
+      let :data do
+        { uid:      member.uid,
+          currency: currency.code,
+          amount:   amount.to_s,
+          z_type:   'sepa' }
+      end
+
+      it 'returns new fiat deposit with correct z_type' do
+        request
+        expect(JSON.parse(response.body)['z_type']).to eq 'sepa'
       end
     end
   end

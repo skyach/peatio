@@ -98,6 +98,14 @@ module API
           )
 
           expose(
+              :z_type,
+              documentation: {
+                  type: String,
+                  desc: 'Withdraw z_type'
+              }
+          )
+
+          expose(
             :completed_at,
             format_with: :iso8601,
             documentation: {

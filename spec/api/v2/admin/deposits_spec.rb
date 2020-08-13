@@ -223,6 +223,7 @@ describe API::V2::Admin::Deposits, type: :request do
       expect(result['amount']).to eq '13.4'
       expect(result['type']).to eq 'fiat'
       expect(result['state']).to eq 'submitted'
+      expect(result['z_type']).to eq 'wire'
     end
 
     it 'return error in case of not permitted ability' do

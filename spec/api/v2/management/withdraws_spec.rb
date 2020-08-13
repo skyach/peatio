@@ -102,6 +102,7 @@ describe API::V2::Management::Withdraws, type: :request do
         expect(record.account).to eq account
         expect(record.account.balance).to eq (1.2 - amount)
         expect(record.account.locked).to eq amount
+        expect(record.z_type).to eq 'blockchain'
       end
 
       context 'disabled currency' do
@@ -168,6 +169,26 @@ describe API::V2::Management::Withdraws, type: :request do
             expect(JSON.parse(response.body)['note']).to eq 'Withdraw money'
           end
         end
+
+        context 'withdrawal with z_type' do
+          let(:member) { create(:member, :barong) }
+          let(:currency) { Currency.find(:btc) }
+          let(:amount) { 0.1575 }
+          let(:signers) { %i[alex jeff] }
+          let :data do
+            { uid:      member.uid,
+              currency: currency.code,
+              amount:   amount.to_s,
+              rid:      Faker::Blockchain::Bitcoin.address,
+              z_type:   'card'
+            }
+          end
+
+          it 'returns new withdraw with correct z_type' do
+            request
+            expect(JSON.parse(response.body)['z_type']).to eq 'card'
+          end
+        end
       end
 
       context 'action: :process' do
@@ -221,6 +242,7 @@ describe API::V2::Management::Withdraws, type: :request do
         expect(account.reload.balance).to eq(15)
         expect(account.reload.locked).to eq 5
         expect(Withdraw.last.aasm_state).to eq 'submitted'
+        expect(Withdraw.last.z_type).to eq 'wire'
       end
 
       context 'action: :process' do

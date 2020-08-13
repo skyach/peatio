@@ -22,6 +22,10 @@ class Withdraw < ApplicationRecord
   include TIDIdentifiable
   include FeeChargeable
 
+  extend Enumerize
+  Z_TYPE = { wire: 0, card: 1, sepa: 2 , blockchain: 3}.freeze
+  enumerize :z_type, in: Z_TYPE, scope: true
+
   # Optional beneficiary association gives ability to support both in-peatio
   # beneficiaries and managed by third party application.
   belongs_to :beneficiary, optional: true
@@ -30,6 +34,7 @@ class Withdraw < ApplicationRecord
 
   before_validation(on: :create) { self.rid ||= beneficiary.rid if beneficiary.present? }
   before_validation { self.completed_at ||= Time.current if completed? }
+  before_validation { self.z_type ||= coin? ? 'blockchain' : 'wire' }
 
   validates :rid, :aasm_state, presence: true
   validates :txid, uniqueness: { scope: :currency_id }, if: :txid?
@@ -299,6 +304,7 @@ end
 #  block_number   :integer
 #  sum            :decimal(32, 16)  not null
 #  type           :string(30)       not null
+#  z_type         :integer
 #  tid            :string(64)       not null
 #  rid            :string(95)       not null
 #  note           :string(256)

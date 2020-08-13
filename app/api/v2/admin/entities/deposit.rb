@@ -84,6 +84,14 @@ module API
           )
 
           expose(
+            :z_type,
+            documentation: {
+                type: String,
+                desc: 'Deposit Z type'
+            }
+          )
+
+          expose(
             :updated_at,
             format_with: :iso8601,
             documentation: {

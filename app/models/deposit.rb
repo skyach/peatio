@@ -14,6 +14,10 @@ class Deposit < ApplicationRecord
   include TIDIdentifiable
   include FeeChargeable
 
+  extend Enumerize
+  Z_TYPE = { wire: 0, card: 1, sepa: 2 , blockchain: 3 }.freeze
+  enumerize :z_type, in: Z_TYPE, scope: true
+
   acts_as_eventable prefix: 'deposit', on: %i[create update]
 
   validates :tid, :aasm_state, :type, presence: true
@@ -28,6 +32,7 @@ class Deposit < ApplicationRecord
   scope :recent, -> { order(id: :desc) }
 
   before_validation { self.completed_at ||= Time.current if completed? }
+  before_validation { self.z_type ||= coin? ? 'blockchain' : 'wire' }
 
   aasm whiny_transitions: false do
     state :submitted, initial: true
@@ -223,6 +228,7 @@ end
 #  aasm_state   :string(30)       not null
 #  block_number :integer
 #  type         :string(30)       not null
+#  z_type       :integer
 #  tid          :string(64)       not null
 #  spread       :string(1000)
 #  created_at   :datetime         not null
