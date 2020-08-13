@@ -173,7 +173,7 @@ describe Market do
 
   context 'validate max market' do
     before { ENV['MAX_MARKETS'] = '2' }
-    after  { ENV['MAX_MARKETS'] = '20' }
+    after  { ENV['MAX_MARKETS'] = nil }
 
     it 'should raise validation error for max market' do
       record = build(:market, :btctrst)

@@ -110,7 +110,7 @@ describe Currency do
 
   context 'validate max currency' do
     before { ENV['MAX_CURRENCIES'] = '6' }
-    after  { ENV['MAX_CURRENCIES'] = '10' }
+    after  { ENV['MAX_CURRENCIES'] = nil }
 
     it 'should raise validation error for max currency' do
       record = build(:currency, :fake, id: 'fake2', type: 'fiat', base_factor: 100)
