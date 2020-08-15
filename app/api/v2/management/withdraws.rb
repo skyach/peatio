@@ -90,7 +90,7 @@ module API
           requires :amount,         type: BigDecimal, desc: 'The amount to withdraw.'
           optional :note,           type: String, desc: 'The note for withdraw.'
           optional :action,         type: String, values: %w[process], desc: 'The action to perform.'
-          optional :z_type,         type: String, values: { value: %w[wire card sepa blockchain], message: 'account.withdraw.z_type_not_in_list'}, desc: 'The z_type to withdraw'
+          optional :z_type,         type: String, values: { value: %w[swift card sepa blockchain], message: 'account.withdraw.z_type_not_in_list'}, desc: 'The z_type to withdraw'
 
           exactly_one_of :rid, :beneficiary_id
         end

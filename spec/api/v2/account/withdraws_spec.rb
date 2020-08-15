@@ -294,7 +294,7 @@ describe API::V2::Account::Withdraws, type: :request do
       expect(record.account).to eq account
       expect(record.account.balance).to eq(1.2 - amount)
       expect(record.account.locked).to eq amount
-      expect(record.z_type).to eq 'wire'
+      expect(record.z_type).to eq 'swift'
     end
 
     it 'creates new withdraw with note' do

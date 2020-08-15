@@ -15,7 +15,7 @@ class Deposit < ApplicationRecord
   include FeeChargeable
 
   extend Enumerize
-  Z_TYPE = { wire: 0, card: 1, sepa: 2 , blockchain: 3 }.freeze
+  Z_TYPE = { swift: 0, card: 1, sepa: 2 , blockchain: 3 }.freeze
   enumerize :z_type, in: Z_TYPE, scope: true
 
   acts_as_eventable prefix: 'deposit', on: %i[create update]
@@ -32,7 +32,7 @@ class Deposit < ApplicationRecord
   scope :recent, -> { order(id: :desc) }
 
   before_validation { self.completed_at ||= Time.current if completed? }
-  before_validation { self.z_type ||= coin? ? 'blockchain' : 'wire' }
+  before_validation { self.z_type ||= coin? ? 'blockchain' : 'swift' }
 
   aasm whiny_transitions: false do
     state :submitted, initial: true

@@ -56,7 +56,7 @@ module API
           requires :amount,   type: BigDecimal, desc: 'The deposit amount.'
           optional :state,    type: String, desc: 'The state of deposit.', values: %w[accepted]
           optional :z_type,   type: String,
-                              values:  { value: %w[wire card sepa blockchain], message: 'account.deposit.z_type_not_in_list'},
+                              values:  { value: %w[swift card sepa blockchain], message: 'account.deposit.z_type_not_in_list' },
                               desc: -> { API::V2::Admin::Entities::Deposit.documentation[:z_type][:desc] }
         end
         post '/deposits/new' do

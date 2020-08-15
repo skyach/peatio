@@ -242,7 +242,7 @@ describe API::V2::Management::Withdraws, type: :request do
         expect(account.reload.balance).to eq(15)
         expect(account.reload.locked).to eq 5
         expect(Withdraw.last.aasm_state).to eq 'submitted'
-        expect(Withdraw.last.z_type).to eq 'wire'
+        expect(Withdraw.last.z_type).to eq 'swift'
       end
 
       context 'action: :process' do

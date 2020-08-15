@@ -23,7 +23,7 @@ class Withdraw < ApplicationRecord
   include FeeChargeable
 
   extend Enumerize
-  Z_TYPE = { wire: 0, card: 1, sepa: 2 , blockchain: 3}.freeze
+  Z_TYPE = { swift: 0, card: 1, sepa: 2 , blockchain: 3 }.freeze
   enumerize :z_type, in: Z_TYPE, scope: true
 
   # Optional beneficiary association gives ability to support both in-peatio
@@ -34,7 +34,7 @@ class Withdraw < ApplicationRecord
 
   before_validation(on: :create) { self.rid ||= beneficiary.rid if beneficiary.present? }
   before_validation { self.completed_at ||= Time.current if completed? }
-  before_validation { self.z_type ||= coin? ? 'blockchain' : 'wire' }
+  before_validation { self.z_type ||= coin? ? 'blockchain' : 'swift' }
 
   validates :rid, :aasm_state, presence: true
   validates :txid, uniqueness: { scope: :currency_id }, if: :txid?
